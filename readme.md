@@ -71,7 +71,7 @@ use tag to describe struct behavior: `where:"field_name,condition_type"`
 | extactlike | like 'foo' |
 | prefixlike | like 'foo%' |
 | suffixlike | like '%foo' |
-| containlike, like '%foo%' |
+| containlike, like | '%foo%' |
 | in | in |
 | isnull | is null |
 | isnotnull | is not null |
