@@ -32,6 +32,10 @@ func NewBuilder(any interface{}) *Builder {
 	return NewBuilderFromStruct(any)
 }
 
+func (b *Builder) AddCondition(field string, condition Condition) {
+	b.model[field] = condition
+}
+
 func (b *Builder) Build() []interface{} {
 	if b == nil || len(b.model) == 0 {
 		return make([]interface{}, 0)
