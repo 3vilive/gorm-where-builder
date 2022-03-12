@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type Model map[string]Condition
+type Model map[string][]Condition
 
 type Builder struct {
 	model Model
@@ -33,7 +33,7 @@ func NewBuilder(any interface{}) *Builder {
 }
 
 func (b *Builder) AddCondition(field string, condition Condition) {
-	b.model[field] = condition
+	b.model[field] = append(b.model[field], condition)
 }
 
 func (b *Builder) Build() []interface{} {
@@ -44,23 +44,25 @@ func (b *Builder) Build() []interface{} {
 	where := make([]interface{}, 0, len(b.model)+1)
 	where = append(where, "")
 	conditions := make([]string, 0, len(b.model))
-	for field, condition := range b.model {
-		conditions = append(conditions, condition.BuildConditionSQL(field))
+	for field, fieldConditions := range b.model {
+		for _, fieldCondition := range fieldConditions {
+			conditions = append(conditions, fieldCondition.BuildConditionSQL(field))
 
-		// 过滤不需要 Val 的类型
-		switch condition.Type {
-		case ConditionTypeIsNull, ConditionTypeIsNotNull:
-			continue
+			// 过滤不需要 Val 的类型
+			switch fieldCondition.Type {
+			case ConditionTypeIsNull, ConditionTypeIsNotNull:
+				continue
 
-		case ConditionTypePrefixLike:
-			where = append(where, fmt.Sprintf("%s%%", condition.Val))
-		case ConditionTypeSuffixLike:
-			where = append(where, fmt.Sprintf("%%%s", condition.Val))
-		case ConditionTypeContainLike:
-			where = append(where, fmt.Sprintf("%%%s%%", condition.Val))
+			case ConditionTypePrefixLike:
+				where = append(where, fmt.Sprintf("%s%%", fieldCondition.Val))
+			case ConditionTypeSuffixLike:
+				where = append(where, fmt.Sprintf("%%%s", fieldCondition.Val))
+			case ConditionTypeContainLike:
+				where = append(where, fmt.Sprintf("%%%s%%", fieldCondition.Val))
 
-		default:
-			where = append(where, condition.Val)
+			default:
+				where = append(where, fieldCondition.Val)
+			}
 		}
 
 	}

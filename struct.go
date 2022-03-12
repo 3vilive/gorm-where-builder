@@ -59,33 +59,33 @@ func NewModelFromStruct(s interface{}) Model {
 		field, conditionTag := tags[0], tags[1]
 		switch conditionTag {
 		case _TagEq:
-			model[field] = Eq(fv.Elem().Interface())
+			model[field] = append(model[field], Eq(fv.Elem().Interface()))
 		case _TagNe:
-			model[field] = Ne(fv.Elem().Interface())
+			model[field] = append(model[field], Ne(fv.Elem().Interface()))
 		case _TagGt:
-			model[field] = Gt(fv.Elem().Interface())
+			model[field] = append(model[field], Gt(fv.Elem().Interface()))
 		case _TagGte:
-			model[field] = Gte(fv.Elem().Interface())
+			model[field] = append(model[field], Gte(fv.Elem().Interface()))
 		case _TagLt:
-			model[field] = Lt(fv.Elem().Interface())
+			model[field] = append(model[field], Lt(fv.Elem().Interface()))
 		case _TagLte:
-			model[field] = Lte(fv.Elem().Interface())
+			model[field] = append(model[field], Lte(fv.Elem().Interface()))
 		case _TagContainLike, _TagContainLikeShort:
-			model[field] = ContainLike(fv.Elem().Interface())
+			model[field] = append(model[field], ContainLike(fv.Elem().Interface()))
 		case _TagPrefixLike:
-			model[field] = PrefixLike(fv.Elem().Interface())
+			model[field] = append(model[field], PrefixLike(fv.Elem().Interface()))
 		case _TagSuffixLike:
-			model[field] = SuffixLike(fv.Elem().Interface())
+			model[field] = append(model[field], SuffixLike(fv.Elem().Interface()))
 		case _TagExtactLike:
-			model[field] = ExtactLike(fv.Elem().Interface())
+			model[field] = append(model[field], ExtactLike(fv.Elem().Interface()))
 		case _TagIn:
 			if fv.Kind() == reflect.Slice || fv.Kind() == reflect.Array {
-				model[field] = In(fv.Interface())
+				model[field] = append(model[field], In(fv.Interface()))
 			}
 		case _TagIsNull:
-			model[field] = IsNull
+			model[field] = append(model[field], IsNull)
 		case _TagIsNotNull:
-			model[field] = IsNotNull
+			model[field] = append(model[field], IsNotNull)
 		}
 	}
 

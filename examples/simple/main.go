@@ -8,7 +8,7 @@ import (
 
 func main() {
 	b := builder.NewBuilder(builder.Model{
-		"age": builder.Eq(1),
+		"age": []builder.Condition{builder.Eq(1)},
 	})
 	where, args := b.Where()
 	fmt.Printf("where: %s\nargs: %#v\n", where, args)
