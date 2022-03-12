@@ -8,6 +8,10 @@ import (
 const (
 	_TagEq               = "eq"
 	_TagNe               = "ne"
+	_TagGt               = "gt"
+	_TagGte              = "gte"
+	_TagLt               = "lt"
+	_TagLte              = "lte"
 	_TagExtactLike       = "extactlike"
 	_TagPrefixLike       = "prefixlike"
 	_TagSuffixLike       = "suffixlike"
@@ -58,6 +62,14 @@ func NewModelFromStruct(s interface{}) Model {
 			model[field] = Eq(fv.Elem().Interface())
 		case _TagNe:
 			model[field] = Ne(fv.Elem().Interface())
+		case _TagGt:
+			model[field] = Gt(fv.Elem().Interface())
+		case _TagGte:
+			model[field] = Gte(fv.Elem().Interface())
+		case _TagLt:
+			model[field] = Lt(fv.Elem().Interface())
+		case _TagLte:
+			model[field] = Lte(fv.Elem().Interface())
 		case _TagContainLike, _TagContainLikeShort:
 			model[field] = ContainLike(fv.Elem().Interface())
 		case _TagPrefixLike:

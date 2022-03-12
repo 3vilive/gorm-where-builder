@@ -8,6 +8,10 @@ const (
 	ConditionTypeUnknown     ConditionType = 0  //
 	ConditionTypeEq          ConditionType = 10 // =
 	ConditionTypeNe          ConditionType = 11 // !=
+	ConditionTypeGt          ConditionType = 12 // >
+	ConditionTypeGte         ConditionType = 13 // >=
+	ConditionTypeLt          ConditionType = 14 // <
+	ConditionTypeLte         ConditionType = 15 // <=
 	ConditionTypeExtactLike  ConditionType = 20 // like '?'
 	ConditionTypePrefixLike  ConditionType = 21 // like '?%'
 	ConditionTypeSuffixLike  ConditionType = 22 // like '%?'
@@ -28,6 +32,14 @@ func (c *Condition) BuildConditionSQL(field string) string {
 		return fmt.Sprintf("`%s` = ?", field)
 	case ConditionTypeNe:
 		return fmt.Sprintf("`%s` != ?", field)
+	case ConditionTypeGt:
+		return fmt.Sprintf("`%s` > ?", field)
+	case ConditionTypeGte:
+		return fmt.Sprintf("`%s` >= ?", field)
+	case ConditionTypeLt:
+		return fmt.Sprintf("`%s` < ?", field)
+	case ConditionTypeLte:
+		return fmt.Sprintf("`%s` <= ?", field)
 	case ConditionTypeExtactLike, ConditionTypePrefixLike, ConditionTypeSuffixLike, ConditionTypeContainLike:
 		return fmt.Sprintf("`%s` like ?", field)
 	case ConditionTypeIn:
@@ -52,6 +64,10 @@ func buildConditionTypeFn(t ConditionType) func(interface{}) Condition {
 
 var Eq = buildConditionTypeFn(ConditionTypeEq)
 var Ne = buildConditionTypeFn(ConditionTypeNe)
+var Gt = buildConditionTypeFn(ConditionTypeGt)
+var Gte = buildConditionTypeFn(ConditionTypeGte)
+var Lt = buildConditionTypeFn(ConditionTypeLt)
+var Lte = buildConditionTypeFn(ConditionTypeLte)
 var ExtactLike = buildConditionTypeFn(ConditionTypeExtactLike)
 var PrefixLike = buildConditionTypeFn(ConditionTypePrefixLike)
 var SuffixLike = buildConditionTypeFn(ConditionTypeSuffixLike)

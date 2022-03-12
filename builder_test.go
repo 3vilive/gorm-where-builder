@@ -13,6 +13,10 @@ func TestConditions(t *testing.T) {
 		"group":    "`group` in ?",
 		"wallet":   "`wallet` is null",
 		"bottle":   "`bottle` is not null",
+		"money":    "`money` > ?",
+		"money2":   "`money2` >= ?",
+		"money3":   "`money3` < ?",
+		"money4":   "`money4` <= ?",
 	}
 	m := Model{
 		"name":     Eq("3vilive"),
@@ -21,6 +25,10 @@ func TestConditions(t *testing.T) {
 		"group":    In([]string{"User Growth", "Sales"}),
 		"wallet":   IsNull,
 		"bottle":   IsNotNull,
+		"money":    Gt(1),
+		"money2":   Gte(1),
+		"money3":   Lt(1),
+		"money4":   Lte(1),
 	}
 
 	for field, condition := range m {
