@@ -5,7 +5,8 @@ import (
 	"strings"
 )
 
-type Model map[string][]Condition
+type Conds []Condition
+type Model map[string]Conds
 
 type Builder struct {
 	model Model
